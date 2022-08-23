@@ -5,7 +5,7 @@ const cardModel = require('../models/cardModel');
 const create = async (model, user, callback) => {
     try {
         // Create new List
-        const tempList = await listModel(model);
+        const tempList = new listModel(model);
 
         // Save the new List
         const newList = await tempList.save();
@@ -25,7 +25,7 @@ const create = async (model, user, callback) => {
         });
 
         // Save changes
-        ownerBoard.save();
+        await ownerBoard.save();
 
         // Return new list
         return callback(false, newList);

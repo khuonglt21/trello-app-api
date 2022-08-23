@@ -77,7 +77,7 @@ const updateListOrder = async (req, res) => {
     const user = req.user;
 
     // Validate the params
-    if (!(boardId && sourceIndex != undefined && destinationIndex != undefined && listId))
+    if (!(boardId && sourceIndex !== undefined && destinationIndex !== undefined && listId))
         return res.status(400).send({ errMessage: 'All parameters not provided' });
 
     // Validate the owner of board
