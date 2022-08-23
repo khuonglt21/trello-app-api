@@ -30,6 +30,12 @@ const userSchema = new mongoose.Schema({
             ref: 'Board',
         },
     ],
+    teams: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Team',
+        }
+    ]
 });
 
 module.exports = mongoose.model('User', userSchema);
