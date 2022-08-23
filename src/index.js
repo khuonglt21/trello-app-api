@@ -4,7 +4,7 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const cors = require('cors');
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4500;
 
 
 app.use(express.json());
