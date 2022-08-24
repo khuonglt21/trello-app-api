@@ -4,6 +4,7 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const cors = require('cors');
 const unless = require('express-unless');
+const boardRoute = require('./routes/boardRoute');
 
 const PORT = process.env.PORT || 4500;
 
@@ -18,7 +19,11 @@ app.get("/", (req, res) => {
 })
 
 
-connectDB();
+connectDB().catch(err => {
+    console.log(err);
+})
+
+app.use('/board', boardRoute);
 app.listen(PORT, () => {
     console.log("You are listening on port " + PORT);
 })
