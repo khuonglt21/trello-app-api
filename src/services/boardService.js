@@ -1,5 +1,5 @@
-const boardModel = require('../Models/boardModel');
-const userModel = require('../Models/userModel');
+const boardModel = require("../models/boardModel");
+const userModel = require("../models/userModel");
 
 const create = async (req, callback) => {
     try {
@@ -86,7 +86,19 @@ const getAll = async (userId, callback) => {
         return callback({ msg: 'Something went wrong', details: error.message });
     }
 };
+
+const getById = async (id, callback) => {
+    try {
+        // Get board by id
+        const board = await boardModel.findById(id);
+        return callback(false, board);
+    } catch (error) {
+        return callback({ message: 'Something went wrong', details: error.message });
+    }
+};
+
 module.exports = {
     create,
     getAll,
+    getById
 };
