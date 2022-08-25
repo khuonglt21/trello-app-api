@@ -1,13 +1,14 @@
 const bcrypt = require("bcryptjs");
 const userService = require("../services/userService");
 const auth = require("../middlewares/auth");
+const {validationResult} = require('express-validator');
 
 const register = async (req, res) => {
     const { name, surname, email, password } = req.body;
-    if (!(name && surname && email && password))
-        return res
-            .status("400")
-            .send({ errMessage: "Please fill all required areas!" });
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(422).send({ errMessage: errors.array() });
+    }
 
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
@@ -21,10 +22,11 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     const { email, password } = req.body;
-    if (!(email && password))
-        return res
-            .status(400)
-            .send({ errMessage: "Please fill all required areas!" });
+    //check validate Login
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(422).send({ errMessage: errors.array() });
+    }
 
     await userService.login(email, (err, result) => {
         if (err) return res.status(400).send(err);
@@ -61,7 +63,6 @@ const getUserWithMail = async(req,res) => {
     const {email} = req.body;
     await userService.getUserWithMail(email,(err,result)=>{
         if(err) return res.status(404).send(err);
-
         const dataTransferObject = {
             name: result.name,
             surname: result.surname,
@@ -71,10 +72,25 @@ const getUserWithMail = async(req,res) => {
         return res.status(200).send(dataTransferObject);
     })
 }
+const checkUserByEmail = async(req,res) => {
+    const email = req.params.email;
+    let checkMail = false;
+    await userService.getUserWithMail(email,(err,result)=>{
+        if(err) {
+            return res.status(404).send({checkMail});
+        }else{
+            checkMail = true
+            return res.status(200).send({checkMail});
+        }
+
+    })
+
+}
 
 module.exports = {
     register,
     login,
     getUser,
     getUserWithMail,
+    checkUserByEmail
 };

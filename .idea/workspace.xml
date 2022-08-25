@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="45834c19-919d-4780-9767-f8d868bf8018" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/userController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/userModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/userModel.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/userRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/userRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/useService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +53,8 @@
       <updated>1661250022881</updated>
       <workItem from="1661250025724" duration="62000" />
       <workItem from="1661250137572" duration="4194000" />
+      <workItem from="1661269104296" duration="1634000" />
+      <workItem from="1661303445027" duration="7927000" />
     </task>
     <servers />
   </component>

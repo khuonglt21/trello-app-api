@@ -28,6 +28,7 @@ app.use(
         path: [
             {url: '/api/user/login', method: ['POST']},
             {url: '/api/user/register', method: ['POST']},
+            {url: /^\/api\/user\/check-email\/.*/, method: ['GET']},
         ],
     })
 );
