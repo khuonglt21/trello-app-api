@@ -2,10 +2,10 @@ const boardModel = require("../models/boardModel");
 const userModel = require("../models/userModel");
 const create = async (req, callback) => {
     try {
-        const { title, backgroundImageLink, members } = req.body;
+        const { title, backgroundImageLink, members, isImage } = req.body;
         // Create and save new board
-        let newBoard =  boardModel({ title, backgroundImageLink });
-        newBoard.save();
+        let newBoard =  boardModel({ title, backgroundImageLink, isImage });
+        await newBoard.save();
 
         // Add this board to owner's boards
         const user = await userModel.findById(req.user.id);
@@ -71,7 +71,7 @@ const getAll = async (userId, callback) => {
         const boardIds = user.boards;
 
         // Get boards of user
-        const boards = await boardModel.find({ _id: { $in: boardIds } });
+        const boards = await boardModel.find({ _id: { $in: boardIds } }).sort({title: -1});
         // const boards = await boardModel.find();
 
         // Delete unneccesary objects
