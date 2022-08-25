@@ -13,8 +13,6 @@ const getById = async (id, callback) => {
     }
 };
 
-
 module.exports = {
-    getById,
+    getById
 };
-

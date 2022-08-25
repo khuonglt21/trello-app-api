@@ -4,12 +4,11 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const cors = require('cors');
 const {unless} = require('express-unless');
-
 const boardRouter = require('./routes/boardRoute');
 const listRouter = require('./routes/listRoute');
 const userRoute = require('./routes/userRoute');
 const auth = require("./middlewares/auth");
-
+const boardsRouter = require('./routes/boardsRoute');
 
 const PORT = process.env.PORT || 5000;
 
@@ -38,6 +37,7 @@ app.use(
 app.use("/api/board", boardRouter);
 app.use("/api/list", listRouter);
 app.use('/api/user', userRoute);
+app.use('/api/boards', boardsRouter);
 
 connectDB();
 app.listen(PORT, () => {
