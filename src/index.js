@@ -11,6 +11,7 @@ const userRoute = require('./routes/userRoute');
 const auth = require("./middlewares/auth");
 const cardRoute = require("./routes/cardRoute");
 
+const boardsRouter = require('./routes/boardsRoute');
 
 const PORT = process.env.PORT || 5000;
 
@@ -30,6 +31,7 @@ app.use(
         path: [
             {url: '/api/user/login', method: ['POST']},
             {url: '/api/user/register', method: ['POST']},
+            {url: /^\/api\/user\/check-email\/.*/, method: ['GET']},
         ],
     })
 );
@@ -39,6 +41,7 @@ app.use("/api/board", boardRouter);
 app.use("/api/list", listRouter);
 app.use('/api/user', userRoute);
 app.use('/api/card', cardRoute);
+app.use('/api/boards', boardsRouter);
 
 connectDB();
 app.listen(PORT, () => {
