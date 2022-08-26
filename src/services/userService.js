@@ -60,9 +60,27 @@ const getUserWithMail = async (email, callback) => {
     }
 };
 
+const uploadAvatar =async (userId,avatar,callback) => {
+    try{
+        let user = await userModel.findOneAndUpdate({_id:userId},{avatar:avatar});
+        if (!user){
+            return callback({errMessage: 'User not found'})
+        }else{
+            return callback({message:'Your avatar was updated successfully'})
+        }
+    }catch (e) {
+        return callback({
+            errMessage: "Something went wrong",
+            details: e.message,
+        });
+    }
+}
+
+
 module.exports = {
     register,
     login,
     getUser,
     getUserWithMail,
+    uploadAvatar
 };
