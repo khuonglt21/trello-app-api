@@ -4,10 +4,13 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const cors = require('cors');
 const {unless} = require('express-unless');
+
 const boardRouter = require('./routes/boardRoute');
 const listRouter = require('./routes/listRoute');
 const userRoute = require('./routes/userRoute');
 const auth = require("./middlewares/auth");
+const cardRoute = require("./routes/cardRoute");
+
 const boardsRouter = require('./routes/boardsRoute');
 const uploadRouter = require('./routes/uploadRoute');
 const PORT = process.env.PORT || 5000;
@@ -38,6 +41,7 @@ app.use("/avatars", express.static("src/public/avatars"))
 app.use("/api/board", boardRouter);
 app.use("/api/list", listRouter);
 app.use('/api/user', userRoute);
+app.use('/api/card', cardRoute);
 app.use('/api/boards', boardsRouter);
 app.use('/api/uploads',uploadRouter)
 
