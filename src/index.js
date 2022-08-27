@@ -6,6 +6,7 @@ const cors = require('cors');
 const {unless} = require('express-unless');
 
 const boardRouter = require('./routes/boardRoute');
+const teamRouter = require('./routes/teamRoute');
 const listRouter = require('./routes/listRoute');
 const userRoute = require('./routes/userRoute');
 const auth = require("./middlewares/auth");
@@ -42,6 +43,7 @@ app.use("/api/list", listRouter);
 app.use('/api/user', userRoute);
 app.use('/api/card', cardRoute);
 app.use('/api/boards', boardsRouter);
+app.use('/api/team', teamRouter);
 
 connectDB();
 app.listen(PORT, () => {
