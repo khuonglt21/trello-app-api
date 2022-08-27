@@ -84,6 +84,10 @@ const boardSchema = new mongoose.Schema(
             type: String,
             default: '',
         },
+        teams: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Team"
+        }
     },
     { timestamps: true }
 );
