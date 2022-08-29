@@ -9,6 +9,8 @@ router.put('/:boardId/:listId/:cardId', cardController.update);
 router.put('/:boardId/:listId/:cardId/:labelId/update-label', cardController.updateLabel);
 router.put('/:boardId/:listId/:cardId/:labelId/update-label-selection', cardController.updateLabelSelection);
 router.post('/:boardId/:listId/:cardId/create-label', cardController.createLabel);
+router.post('/:boardId/:listId/:cardId/add-comment', cardController.addComment);
+
 
 
 
