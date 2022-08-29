@@ -8,9 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/uploadsController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/uploadsController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/avatars/1661503095038-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/userRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/userRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/uploadRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/uploadRoute.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/userService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,6 +63,7 @@
       <workItem from="1661476493183" duration="14532000" />
       <workItem from="1661566656900" duration="6887000" />
       <workItem from="1661588173196" duration="6298000" />
+      <workItem from="1661735719314" duration="1809000" />
     </task>
     <servers />
   </component>

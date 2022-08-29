@@ -81,13 +81,14 @@ const uploadAvatar =async (userId,avatar,callback) => {
 }
 
 const updateInfo =async (userId,userInfo,callback) => {
-    const {name, surname, email, newPasswordBcrypt} = userInfo;
+    const {name, surname, email, password} = userInfo;
+    console.log(email)
+    console.log(password)
     try{
-        let user = await userModel.findOneAndUpdate({_id:userId},{name, surname, email,password:newPasswordBcrypt});
+        let user = await userModel.findOneAndUpdate({_id:userId},{name, surname, email,password:password});
         if (!user){
             return callback(true,{Message: 'User not found'})
         }else{
-            console.log('789')
             return callback(false,{
                 message:"user already exists",
                 user})

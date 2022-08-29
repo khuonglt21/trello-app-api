@@ -104,7 +104,7 @@ const updateUser = async (req, res) => {
                 })
             }
             const salt = bcrypt.genSaltSync(10);
-            const newPasswordBcrypt = bcrypt.hashSync(password,salt)
+            const newPasswordBcrypt = bcrypt.hashSync(newPassword,salt)
             await userService.updateInfo(decoded.id, {name, surname, email, password:newPasswordBcrypt}, (error, result) => {
                 if (error) {
                     return res.status(404).send(error);

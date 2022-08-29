@@ -7,11 +7,9 @@ const uploadAvatarUser = async(req,res)=>{
         let decoded = jwt_decode(token);
         await userService.uploadAvatar(decoded.id,req.file.filename,(err,result)=>{
             if(err){
-                console.log('345')
                 return res.status(400).send(err.message)
             }
 
-                console.log('123');
                 return res.status(200).send(result);
 
         })
