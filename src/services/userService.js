@@ -63,16 +63,41 @@ const getUserWithMail = async (email, callback) => {
 const uploadAvatar =async (userId,avatar,callback) => {
     try{
         let user = await userModel.findOneAndUpdate({_id:userId},{avatar:avatar});
+
         if (!user){
-            return callback({errMessage: 'User not found'})
+            return callback(true,{Message: 'User not found'})
         }else{
-            return callback({message:'Your avatar was updated successfully'})
+            // console.log('789')
+            return callback(false,{
+                message:"user already exists",
+                user})
         }
     }catch (e) {
-        return callback({
+        return callback(true,{
             errMessage: "Something went wrong",
             details: e.message,
         });
+    }
+}
+
+const updateInfo =async (userId,userInfo,callback) => {
+    const {name, surname, email, newPasswordBcrypt} = userInfo;
+    try{
+        let user = await userModel.findOneAndUpdate({_id:userId},{name, surname, email,password:newPasswordBcrypt});
+        if (!user){
+            return callback(true,{Message: 'User not found'})
+        }else{
+            console.log('789')
+            return callback(false,{
+                message:"user already exists",
+                user})
+        }
+
+    }catch (e) {
+        return callback({
+            errMessage: "Something went wrong,can't update",
+            details: e.message,
+        })
     }
 }
 
@@ -82,5 +107,6 @@ module.exports = {
     login,
     getUser,
     getUserWithMail,
-    uploadAvatar
+    uploadAvatar,
+    updateInfo
 };
