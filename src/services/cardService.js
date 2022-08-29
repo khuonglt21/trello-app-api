@@ -18,7 +18,7 @@ const create = async (title, listId, boardId, user, callback) => {
         const card = await cardModel({title: title});
         card.owner = listId;
         card.activities.unshift({text: `added this card to ${list.title}`, userName: user.name, color: user.color});
-        // card.labels = board.labels;
+        card.labels = board.labels;
         await card.save();
 
         // Add id of the new card to owner list

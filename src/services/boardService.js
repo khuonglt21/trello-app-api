@@ -76,10 +76,22 @@ const updateBoardTitle = async (boardId, title, user, callback) => {
 		return callback({ message: 'Something went wrong', details: error.message });
 	}
 };
+const updateIsExpandedLabels = async (boardId, user, callback) => {
+	try {
+		// Get board by id
+		const board = await boardModel.findById(boardId);
+		board.isExpandedLabels = !board.isExpandedLabels;
+		await board.save();
+		return callback(false, { message: 'Success!' });
+	} catch (error) {
+		return callback({ message: 'Something went wrong', details: error.message });
+	}
+};
 
 module.exports = {
     getById,
     addMember,
 	getActivityById,
 	updateBoardTitle,
+	updateIsExpandedLabels
 };
