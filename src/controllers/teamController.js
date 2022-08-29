@@ -1,4 +1,5 @@
 const teamService = require('../services/teamService');
+const boardsService = require("../services/boardsService");
 
 
 const createTeam = async (req, res) => {
@@ -22,9 +23,22 @@ const getTeams = async (req, res) => {
 };
 
 
+const createBoardInTeam = async (req, res) => {
+    const {title, backgroundImageLink} = req.body;
+    if (!(title && backgroundImageLink))
+        return res.status(400).send({errMessage: 'Title and/or image cannot be null'});
+    await teamService.createBoardInTeam(req, (err, result) => {
+        if (err) return res.status(500).send(err);
+        result.__v = undefined;
+        return res.status(201).send(result);
+    });
+};
+
+
 
 module.exports = {
     createTeam,
     getTeams,
+    createBoardInTeam
 
 };
