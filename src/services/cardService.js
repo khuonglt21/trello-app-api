@@ -59,25 +59,25 @@ const getCard = async (cardId, listId, boardId, user, callback) => {
         if (!validate) return callback({
             errMessage: 'You dont have permission to update this card',
         });
-        for (let i = 0; i < board.labels.length; i++) {
-            let label= false;
-            for (let j = 0; j < card.labels.length; j++) {
-                if(board.labels[i].text === card.labels[j].text){
-                    if(board.labels[i].color === card.labels[j].color){
-                        if(board.labels[i]._id.toString() === card.labels[j]._id.toString()){
-                            label = true;
-                            break;
-                        }else{
-
-                        }
-
-                    }
-                }
-            }
-            // if(label === false){
-            //     card.labels.push(board.labels[i]);
-            // }
-        }
+        // for (let i = 0; i < board.labels.length; i++) {
+        //     let label= false;
+        //     for (let j = 0; j < card.labels.length; j++) {
+        //         if(board.labels[i].text === card.labels[j].text){
+        //             if(board.labels[i].color === card.labels[j].color){
+        //                 if(board.labels[i]._id.toString() === card.labels[j]._id.toString()){
+        //                     label = true;
+        //                     break;
+        //                 }else{
+        //
+        //                 }
+        //
+        //             }
+        //         }
+        //     }
+        //     // if(label === false){
+        //     //     card.labels.push(board.labels[i]);
+        //     // }
+        // }
         await card.save();
 
         let returnObject = {...card._doc, listTitle: list.title, listId: listId, boardId: boardId};
@@ -138,6 +138,7 @@ const updateLabel = async (cardId, listId, boardId, labelId, user, label, callba
                 item.text = label.text;
                 item.color = label.color;
                 item.backColor = label.backColor;
+                item.selected = false;
             }
             return item;
         });
@@ -199,6 +200,7 @@ const createLabel = async (cardId, listId, boardId, user, label, callback) => {
         });
         await card.save();
         board.labels.unshift({
+            _id : card.labels[0]._id,
             text: label.text,
             color: label.color,
             backcolor: label.backColor,
