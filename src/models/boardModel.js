@@ -104,6 +104,10 @@ const boardSchema = new mongoose.Schema(
                 },
             },
         ],
+        isExpandedLabels: {
+            type: Boolean,
+            default: false,
+        }
     },
     { timestamps: true }
 );
