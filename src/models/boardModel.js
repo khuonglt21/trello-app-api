@@ -87,7 +87,23 @@ const boardSchema = new mongoose.Schema(
         teams: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Team"
-        }
+        },
+        labels: [
+            {
+                text: {
+                    type: String,
+                },
+                color: {
+                    type: String,
+                },
+                backColor: {
+                    type: String,
+                },
+                selected: {
+                    type: Boolean,
+                },
+            },
+        ],
     },
     { timestamps: true }
 );
