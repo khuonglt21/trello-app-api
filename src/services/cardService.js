@@ -51,8 +51,7 @@ const getCard = async (cardId, listId, boardId, user, callback) => {
         const list = await listModel.findById(listId);
         const board = await boardModel.findById(boardId);
 
-        // console.log(board.labels, "board");
-        // console.log(card.labels, "card");
+
 
         // Validate owner
         const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
