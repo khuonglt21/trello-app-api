@@ -19,11 +19,9 @@ const register = async (user, callback) => {
 const login = async (email, callback) => {
     try {
         let user = await userModel.findOne({email});
-        console.log(user)
         if (!user) return callback({errMessage: "Your email/password is wrong!"});
         return callback(false, {...user.toJSON()});
     } catch (err) {
-        console.log(err.message);
         return callback({
             errMessage: "Something went wrong",
             details: err.message,
