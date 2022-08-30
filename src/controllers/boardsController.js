@@ -1,6 +1,5 @@
 const boardsService = require('../services/boardsService');
 
-
 const create = async (req, res) => {
     const {title, backgroundImageLink} = req.body;
     if (!(title && backgroundImageLink))
@@ -19,8 +18,6 @@ const getAll = async (req, res) => {
         return res.status(200).send(result);
     });
 };
-
-
 
 module.exports = {
     create,
