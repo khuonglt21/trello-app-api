@@ -24,6 +24,7 @@ const createTeam = async (req, callback) => {
             color: user.color,
             role: 'owner',
         });
+        console.log(allMembers,"members")
 
         // Save newBoard's id to boards of members and,
         // Add ids of members to newBoard
@@ -55,6 +56,7 @@ const createTeam = async (req, callback) => {
         // Save new board
         newTeam.members = allMembers;
         await newTeam.save();
+        console.log(newTeam);
 
         return callback(false, newTeam);
     } catch (error) {
@@ -72,6 +74,7 @@ const getTeams = async (userId, callback) => {
 
         // Get board's ids of user
         const teamIds = user.teams;
+        console.log(teamIds)
 
         // Get boards of user
         const teams = await teamModel.find({ _id: { $in: teamIds } }).sort({name: -1});
