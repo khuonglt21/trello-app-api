@@ -173,7 +173,7 @@ const updateLabelSelection = async (cardId, listId, boardId, labelId, user, sele
         });
         await card.save();
 
-        return callback(false, { message: 'Success!' });
+        return callback(false, card);
     } catch (error) {
         return callback({ errMessage: 'Something went wrong', details: error.message });
     }
@@ -207,14 +207,42 @@ const createLabel = async (cardId, listId, boardId, user, label, callback) => {
             selected: false,
         });
         await board.save();
-
         const labelId = card.labels[0]._id;
 
-        return callback(false, { labelId: labelId });
+        return callback(false, { labelId: labelId, card: card });
     } catch (error) {
         return callback({ errMessage: 'Something went wrong', details: error.message });
     }
 };
+
+const deleteLabel = async (cardId, listId, boardId, labelId, user, callback) => {
+    try {
+        // Get models
+        const card = await cardModel.findById(cardId);
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
+        const allCard = await cardModel.find({owner: list._id });
+
+
+
+        // Validate owner
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) {
+            errMessage: 'You dont have permission to delete this label';
+        }
+
+        //Delete label
+        card.labels = card.labels.filter((label) => label._id.toString() !== labelId.toString());
+        await card.save();
+        board.labels = board.labels.filter((label) => label._id.toString() !== labelId.toString())
+        await board.save();
+
+        return callback(false, { message: 'Success!' });
+    } catch (error) {
+        return callback({ errMessage: 'Something went wrong', details: error.message });
+    }
+};
+
 
 
 
@@ -224,6 +252,7 @@ module.exports = {
     update,
     updateLabel,
     updateLabelSelection,
-    createLabel
+    createLabel,
+    deleteLabel
 
 }

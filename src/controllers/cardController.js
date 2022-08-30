@@ -82,12 +82,25 @@ const createLabel = async (req, res) => {
     });
 };
 
+const deleteLabel = async (req, res) => {
+    // Get params
+    const user = req.user;
+    const { boardId, listId, cardId, labelId } = req.params;
+
+    // Call the card service
+    await cardService.deleteLabel(cardId, listId, boardId, labelId, user, (err, result) => {
+        if (err) return res.status(500).send(err);
+        return res.status(200).send(result);
+    });
+};
+
 module.exports = {
     create,
     getCard,
     update,
     updateLabel,
     updateLabelSelection,
-    createLabel
+    createLabel,
+    deleteLabel
 
 }
