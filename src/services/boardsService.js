@@ -1,5 +1,6 @@
 const boardModel = require("../models/boardModel");
 const userModel = require("../models/userModel");
+const helperMethods = require('./helperMethods');
 const create = async (req, callback) => {
     try {
         const { title, backgroundImageLink, members, isImage } = req.body;
@@ -52,6 +53,7 @@ const create = async (req, callback) => {
 
         // Save new board
         newBoard.members = allMembers;
+        newBoard.labels = helperMethods.labelsSeed;
         await newBoard.save();
 
         return callback(false, newBoard);

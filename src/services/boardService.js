@@ -49,7 +49,49 @@ const addMember = async (id, members, user, callback) => {
 	}
 };
 
+const getActivityById = async (id, callback) => {
+	try {
+		// Get board by id
+		const board = await boardModel.findById(id);
+		return callback(false, board.activity);
+	} catch (error) {
+		return callback({ message: 'Something went wrong', details: error.message });
+	}
+};
+
+const updateBoardTitle = async (boardId, title, user, callback) => {
+	try {
+		// Get board by id
+		const board = await boardModel.findById(boardId);
+		board.title = title;
+		board.activity.unshift({
+			user: user._id,
+			name: user.name,
+			action: 'update title of this board',
+			color: user.color,
+		});
+		await board.save();
+		return callback(false, { message: 'Success!' });
+	} catch (error) {
+		return callback({ message: 'Something went wrong', details: error.message });
+	}
+};
+const updateIsExpandedLabels = async (boardId, user, callback) => {
+	try {
+		// Get board by id
+		const board = await boardModel.findById(boardId);
+		board.isExpandedLabels = !board.isExpandedLabels;
+		await board.save();
+		return callback(false, { message: 'Success!' });
+	} catch (error) {
+		return callback({ message: 'Something went wrong', details: error.message });
+	}
+};
+
 module.exports = {
     getById,
-    addMember
+    addMember,
+	getActivityById,
+	updateBoardTitle,
+	updateIsExpandedLabels
 };
