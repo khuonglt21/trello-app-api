@@ -1,7 +1,6 @@
 const cardModel = require('../models/cardModel');
 const listModel = require('../models/listModel');
 const boardModel = require('../models/boardModel');
-const userModel = require('../models/userModel');
 const helperMethods = require('./helperMethods');
 
 const create = async (title, listId, boardId, user, callback) => {
@@ -60,14 +59,14 @@ const getCard = async (cardId, listId, boardId, user, callback) => {
             errMessage: 'You dont have permission to update this card',
         });
         for (let i = 0; i < board.labels.length; i++) {
-            let label= false;
+            let label = false;
             for (let j = 0; j < card.labels.length; j++) {
-                if(board.labels[i].text === card.labels[j].text){
-                    if(board.labels[i].color === card.labels[j].color){
-                        if(board.labels[i]._id.toString() === card.labels[j]._id.toString()){
+                if (board.labels[i].text === card.labels[j].text) {
+                    if (board.labels[i].color === card.labels[j].color) {
+                        if (board.labels[i]._id.toString() === card.labels[j]._id.toString()) {
                             label = true;
                             break;
-                        }else{
+                        } else {
 
                         }
 
@@ -143,9 +142,9 @@ const updateLabel = async (cardId, listId, boardId, labelId, user, label, callba
         });
         await board.save();
 
-        return callback(false, { message: 'Success!' });
+        return callback(false, {message: 'Success!'});
     } catch (error) {
-        return callback({ errMessage: 'Something went wrong', details: error.message });
+        return callback({errMessage: 'Something went wrong', details: error.message});
     }
 };
 
@@ -172,9 +171,9 @@ const updateLabelSelection = async (cardId, listId, boardId, labelId, user, sele
         });
         await card.save();
 
-        return callback(false, { message: 'Success!' });
+        return callback(false, {message: 'Success!'});
     } catch (error) {
-        return callback({ errMessage: 'Something went wrong', details: error.message });
+        return callback({errMessage: 'Something went wrong', details: error.message});
     }
 };
 const createLabel = async (cardId, listId, boardId, user, label, callback) => {
@@ -208,12 +207,55 @@ const createLabel = async (cardId, listId, boardId, user, label, callback) => {
 
         const labelId = card.labels[0]._id;
 
-        return callback(false, { labelId: labelId });
+        return callback(false, {labelId: labelId});
     } catch (error) {
-        return callback({ errMessage: 'Something went wrong', details: error.message });
+        return callback({errMessage: 'Something went wrong', details: error.message});
     }
 };
 
+const uploadFile = async (cardId, file, callback) => {
+    try {
+        // const card = await cardModel.updateOne(cardId, {
+        //     $push: {
+        //         attachments: {
+        //             link: file,
+        //             name: file
+        //         }
+        //     }
+        // })
+        const card = await cardModel.findById(cardId);
+        card.attachments.push( {
+                       link: file,
+                       name: file
+                    });
+        card.save();
+        return callback(false,card)
+    } catch (e) {
+        return callback({errMessage: 'Something went wrong', details: e.message})
+    }
+};
+const addAttachmentToCard = async(cardId,listId,boardId,user,linkName,link,callback) =>{
+    try{
+        // Get models
+        const card = await cardModel.findById(cardId);
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
+
+        // Validate owner
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) {
+          return callback({errMessage: 'You dont have permission to add label this card'})
+        }
+        card.attachments.push( {
+            link: link,
+            name: linkName
+        });
+        card.save();
+        return callback(false,card)
+    }catch (e) {
+        callback(true,{errMessage: 'Something went wrong', details: e.message})
+    }
+}
 
 
 module.exports = {
@@ -222,6 +264,7 @@ module.exports = {
     update,
     updateLabel,
     updateLabelSelection,
-    createLabel
-
+    createLabel,
+    uploadFile,
+    addAttachmentToCard
 }

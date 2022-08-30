@@ -32,12 +32,13 @@ app.use(
             {url: '/api/user/register', method: ['POST']},
             {url: /^\/api\/user\/check-email\/.*/, method: ['GET']},
             {url: /^\/avatars\/.*/, method: ['GET']},
+            {url: /^\/fileCard\/.*/, method: ['GET']},
         ],
     })
 );
 
 app.use("/avatars", express.static("src/public/avatars"))
-
+app.use('/fileCard',express.static("src/public/cards"))
 // Routes
 app.use("/api/board", boardRouter);
 app.use("/api/list", listRouter);
@@ -45,7 +46,7 @@ app.use('/api/user', userRoute);
 app.use('/api/card', cardRoute);
 app.use('/api/boards', boardsRouter);
 app.use('/api/team', teamRouter);
-app.use('/api/uploads',uploadRouter)
+app.use('/api/uploads',uploadRouter);
 
 connectDB();
 app.listen(PORT, () => {
