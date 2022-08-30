@@ -216,7 +216,119 @@ const createLabel = async (cardId, listId, boardId, user, label, callback) => {
     }
 };
 
+const addComment = async (cardId, listId, boardId, user, body, callback) => {
+    try {
+        // Get models
+        const card = await cardModel.findById(cardId);
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
 
+        // Validate owner
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) {
+            errMessage: 'You dont have permission to update this card';
+        }
+
+        //Add comment
+        card.activities.unshift({
+            text: body.text,
+            userName: user.name,
+            isComment: true,
+            color: user.color,
+        });
+        await card.save();
+
+        //Add comment to board activity
+        board.activity.unshift({
+            user: user._id,
+            name: user.name,
+            action: body.text,
+            actionType: 'comment',
+            cardTitle: card.title,
+            color: user.color,
+        });
+        await board.save();
+
+        return callback(false, card.activities);
+    } catch (error) {
+        return callback({ errMessage: 'Something went wrong', details: error.message });
+    }
+};
+
+const deleteComment = async (cardId, listId, boardId, commentId, user, callback) => {
+    try {
+        // Get models
+        const card = await cardModel.findById(cardId);
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
+
+        // Validate owner
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) {
+            errMessage: 'You dont have permission to update this card';
+        }
+
+        //Delete card
+        card.activities = card.activities.filter((activity) => activity._id.toString() !== commentId.toString());
+        await card.save();
+
+        //Add to board activity
+        board.activity.unshift({
+            user: user._id,
+            name: user.name,
+            action: `deleted his/her own comment from ${card.title}`,
+            color: user.color,
+        });
+        await board.save();
+
+        return callback(false, { message: 'Success!' });
+    } catch (error) {
+        return callback({ errMessage: 'Something went wrong', details: error.message });
+    }
+};
+
+const updateComment = async (cardId, listId, boardId, commentId, user, body, callback) => {
+    try {
+        // Get models
+        const card = await cardModel.findById(cardId);
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
+
+        // Validate owner
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) {
+            errMessage: 'You dont have permission to update this card';
+        }
+
+        //Update card
+        card.activities = card.activities.map((activity) => {
+            if (activity._id.toString() === commentId.toString()) {
+                if (activity.userName !== user.name) {
+                    return callback({ errMessage: "You can not edit the comment that you hasn't" });
+                }
+                activity.text = body.text;
+            }
+            return activity;
+        });
+        await card.save();
+
+        //Add to board activity
+        board.activity.unshift({
+            user: user._id,
+            name: user.name,
+            action: `update comment to ${body.text}`,
+            actionType: 'comment',
+            edited: true,
+            color: user.color,
+            cardTitle: card.title,
+        });
+        await board.save();
+
+        return callback(false, { message: 'Success!' });
+    } catch (error) {
+        return callback({ errMessage: 'Something went wrong', details: error.message });
+    }
+};
 
 module.exports = {
     create,
@@ -224,6 +336,9 @@ module.exports = {
     update,
     updateLabel,
     updateLabelSelection,
-    createLabel
+    createLabel,
+    addComment,
+    deleteComment,
+    updateComment,
 
 }
