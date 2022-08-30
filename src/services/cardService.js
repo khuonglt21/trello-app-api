@@ -206,6 +206,7 @@ const createLabel = async (cardId, listId, boardId, user, label, callback) => {
             selected: false,
         });
         await board.save();
+
         const labelId = card.labels[0]._id;
 
         return callback(false, { labelId: labelId, card: card });
@@ -242,6 +243,49 @@ const deleteLabel = async (cardId, listId, boardId, labelId, user, callback) => 
     }
 };
 
+const uploadFile = async (cardId, file, callback) => {
+    try {
+        // const card = await cardModel.updateOne(cardId, {
+        //     $push: {
+        //         attachments: {
+        //             link: file,
+        //             name: file
+        //         }
+        //     }
+        // })
+        const card = await cardModel.findById(cardId);
+        card.attachments.push( {
+                       link: file,
+                       name: file
+                    });
+        card.save();
+        return callback(false,card)
+    } catch (e) {
+        return callback({errMessage: 'Something went wrong', details: e.message})
+    }
+};
+const addAttachmentToCard = async(cardId,listId,boardId,user,linkName,link,callback) =>{
+    try{
+        // Get models
+        const card = await cardModel.findById(cardId);
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
+
+        // Validate owner
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) {
+          return callback({errMessage: 'You dont have permission to add label this card'})
+        }
+        card.attachments.push( {
+            link: link,
+            name: linkName
+        });
+        card.save();
+        return callback(false,card)
+    }catch (e) {
+        callback(true,{errMessage: 'Something went wrong', details: e.message})
+    }
+}
 const addComment = async (cardId, listId, boardId, user, body, callback) => {
     try {
         // Get models
@@ -366,6 +410,7 @@ module.exports = {
     addComment,
     deleteComment,
     updateComment,
-    deleteLabel
-
+    deleteLabel,
+    uploadFile,
+    addAttachmentToCard
 }

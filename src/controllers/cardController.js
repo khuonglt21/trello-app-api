@@ -130,6 +130,17 @@ const deleteLabel = async (req, res) => {
     });
 };
 
+const insertAttachmentsCard = async (req, res) => {
+    const {boardId,listId,cardId} = req.params;
+    const user = req.user;
+    const {link,linkName} = req.body;
+    console.log(link,linkName)
+    await cardService.addAttachmentToCard(cardId,listId,boardId,user,linkName,link,(err, result)=>{
+        if(err) return res.status(500).send(err);
+        return res.status(200).send(result);
+    })
+}
+
 module.exports = {
     create,
     getCard,
@@ -140,7 +151,7 @@ module.exports = {
     addComment,
     deleteComment,
     updateComment,
-    deleteLabel
-
+    deleteLabel,
+    insertAttachmentsCard
 
 }
