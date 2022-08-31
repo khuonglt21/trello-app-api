@@ -1,11 +1,25 @@
 const userModel = require("../models/userModel");
+const teamModel = require("../models/teamModel");
+const boardModel = require("../models/boardModel");
 const {createRandomHexColor} = require("./helperMethods");
 
 const register = async (user, callback) => {
     let userfind = await userModel.findOne({email: user.email});
-    if(userfind) return callback({errMessage: "Email already in use!", details: ""});
+    if (userfind) return callback({errMessage: "Email already in use!", details: ""});
 
     const newUser = new userModel({...user, color: createRandomHexColor()});
+
+    const newTeam = new teamModel({
+        name: "Trello Không gian làm việc ",
+        members: [{
+            user: newUser._id,
+        }]
+    })
+    newUser.teams = newTeam._id;
+    newUser.defaultTeam = newTeam._id;
+    await newTeam.save();
+
+
     await newUser
         .save()
         .then((result) => {
@@ -58,45 +72,74 @@ const getUserWithMail = async (email, callback) => {
     }
 };
 
-const uploadAvatar =async (userId,avatar,callback) => {
-    try{
-        let user = await userModel.findOneAndUpdate({_id:userId},{avatar:avatar});
+const uploadAvatar = async (userId, avatar, callback) => {
+    try {
+        let user = await userModel.findOneAndUpdate({_id: userId}, {avatar: avatar});
 
-        if (!user){
-            return callback(true,{Message: 'User not found'})
-        }else{
+        if (!user) {
+            return callback(true, {Message: 'User not found'})
+        } else {
             // console.log('789')
-            return callback(false,{
-                message:"user already exists",
-                user})
+            return callback(false, {
+                message: "user already exists",
+                user
+            })
         }
-    }catch (e) {
-        return callback(true,{
+    } catch (e) {
+        return callback(true, {
             errMessage: "Something went wrong",
             details: e.message,
         });
     }
 }
 
-const updateInfo =async (userId,userInfo,callback) => {
+const updateInfo = async (userId, userInfo, callback) => {
     const {name, surname, email, password} = userInfo;
     console.log(email)
     console.log(password)
-    try{
-        let user = await userModel.findOneAndUpdate({_id:userId},{name, surname, email,password:password});
-        if (!user){
-            return callback(true,{Message: 'User not found'})
-        }else{
-            return callback(false,{
-                message:"user already exists",
-                user})
+    try {
+        let user = await userModel.findOneAndUpdate({_id: userId}, {name, surname, email, password: password});
+        if (!user) {
+            return callback(true, {Message: 'User not found'})
+        } else {
+            return callback(false, {
+                message: "user already exists",
+                user
+            })
         }
 
-    }catch (e) {
+    } catch (e) {
         return callback({
             errMessage: "Something went wrong,can't update",
             details: e.message,
         })
+    }
+}
+
+const updateRoleUser = async (req, callback) => {
+    try {
+        const {role, idMember, idBoard} = req.body
+
+        const board = await boardModel.findById(idBoard)
+
+        board.members = board.members.map(member => {
+           if(member._id.toString() === idMember) {
+               member.role=role
+           }
+           return member
+        })
+
+        await board.save();
+
+        return callback(false, {
+            message: "roleUser changed successfully",
+        })
+
+    } catch (error) {
+        return callback({
+            errMessage: 'Something went wrong',
+            details: error.message,
+        });
     }
 }
 
@@ -107,5 +150,6 @@ module.exports = {
     getUser,
     getUserWithMail,
     uploadAvatar,
-    updateInfo
+    updateInfo,
+    updateRoleUser
 };
