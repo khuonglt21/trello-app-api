@@ -36,6 +36,9 @@ const userSchema = mongoose.Schema({
             ref: 'team',
         },
     ],
+    defaultTeam:{
+        type: String,
+    }
 });
 
 module.exports = mongoose.model('user', userSchema);

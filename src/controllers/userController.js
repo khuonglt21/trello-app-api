@@ -3,6 +3,8 @@ const userService = require("../services/userService");
 const auth = require("../middlewares/auth");
 const {validationResult} = require('express-validator');
 const jwt_decode = require("jwt-decode");
+const boardModel = require("../models/boardModel");
+const teamService = require("../services/teamService");
 
 const register = async (req, res) => {
     const {name, surname, email, password} = req.body;
@@ -86,6 +88,7 @@ const checkUserByEmail = async (req, res) => {
     })
 
 }
+
 const updateUser = async (req, res) => {
     const {name, surname, email, newPassword, password} = req.body;
     // console.log('123')
@@ -122,11 +125,28 @@ const updateUser = async (req, res) => {
 }
 
 
+const updateRoleUser = async (req, res) => {
+
+    try{
+        await userService.updateRoleUser(req, (err, result) => {
+            if (err) return res.status(500).send(err);
+            result.__v = undefined;
+            return res.status(201).send(result);
+        });
+    }catch (error) {
+        return res.status(404).send(error);
+    }
+
+}
+
+
+
 module.exports = {
     register,
     login,
     getUser,
     getUserWithMail,
     checkUserByEmail,
-    updateUser
+    updateUser,
+    updateRoleUser
 };

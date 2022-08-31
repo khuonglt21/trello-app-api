@@ -14,6 +14,7 @@ const boardSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+
         activity: [
             {
                 user: {
@@ -87,6 +88,9 @@ const boardSchema = new mongoose.Schema(
         teams: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Team"
+        },
+        visibility:{
+            type:String
         },
         labels: [
             {
