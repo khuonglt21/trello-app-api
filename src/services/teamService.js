@@ -74,7 +74,11 @@ const getTeams = async (userId, callback) => {
         const teamIds = user.teams;
 
         // Get boards of user
-        const teams = await teamModel.find({ _id: { $in: teamIds } }).sort({name: -1});
+        const teams = await teamModel
+            .find({ _id: { $in: teamIds } })
+            .collation({'locale':'en'})
+            .sort({name: 1})
+
         // const boards = await boardModel.find();
 
         // Delete unneccesary objects

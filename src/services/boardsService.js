@@ -3,9 +3,10 @@ const userModel = require("../models/userModel");
 const helperMethods = require('./helperMethods');
 const create = async (req, callback) => {
     try {
-        const { title, backgroundImageLink, members, isImage } = req.body;
+        console.log(req.body)
+        const { title, backgroundImageLink, members, isImage,visibility,teams} = req.body;
         // Create and save new board
-        let newBoard =  boardModel({ title, backgroundImageLink, isImage });
+        let newBoard =  boardModel({ title, backgroundImageLink, isImage,visibility,teams});
         await newBoard.save();
 
         // Add this board to owner's boards
