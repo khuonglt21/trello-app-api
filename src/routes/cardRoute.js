@@ -15,6 +15,6 @@ router.put('/:boardId/:listId/:cardId/:commentId', cardController.updateComment)
 router.delete('/:boardId/:listId/:cardId/:labelId/delete-label', cardController.deleteLabel);
 router.delete('/attachment/:boardId/:listId/:cardId/:attachmentId',cardController.deleteAttachmentCard)
 router.post('/:boardId/:listId/:cardId', cardController.insertAttachmentsCard)
-
+router.put('/attachment/:boardId/:listId/:cardId/:attachmentId',cardController.attachmentUpdate)
 
 module.exports = router;

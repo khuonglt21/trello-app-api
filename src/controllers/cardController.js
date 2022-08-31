@@ -1,6 +1,5 @@
 const cardService = require('../services/cardService');
 
-
 const create = async (req, res) => {
     // get infor from req.body
     const {title, listId, boardId} = req.body;
@@ -148,6 +147,15 @@ const deleteAttachmentCard = async (req, res) => {
         return res.status(200).send(result);
     })
 }
+const attachmentUpdate = async(req, res) => {
+    const {boardId,listId,cardId,attachmentId} = req.params;
+    const user = req.user
+    const {link,linkName,check} = req.body;
+    await cardService.updateAttachmentCard(cardId, listId, boardId,attachmentId,user,link,linkName,check,(err, result) => {
+        if(err) return res.status(500).send(err);
+        return res.status(200).send(result);
+    })
+}
 
 module.exports = {
     create,
@@ -161,6 +169,6 @@ module.exports = {
     updateComment,
     deleteLabel,
     insertAttachmentsCard,
-    deleteAttachmentCard
-
+    deleteAttachmentCard,
+    attachmentUpdate
 }

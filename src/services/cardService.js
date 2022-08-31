@@ -3,6 +3,7 @@ const listModel = require('../models/listModel');
 const boardModel = require('../models/boardModel');
 const userModel = require('../models/userModel');
 const helperMethods = require('./helperMethods');
+const fs = require('fs');
 
 const create = async (title, listId, boardId, user, callback) => {
     try {
@@ -408,11 +409,57 @@ const deleteAttachmentCard = async (cardId, listId, boardId, attachmentId, user,
         if (!validate) {
             return callback({errMessage: 'You dont have permission to delete label this card'})
         }
+        //delete file
+        const fileLink =await card.attachments.filter(attachment => attachment._id.toString() === attachmentId.toString())
+        const httpREGEX = new RegExp('http:')
+        if(!httpREGEX.test(fileLink[0].link)){
+          await fs.unlink('./src/public/cards/'+fileLink[0].link,(err,result)=>{
+              if (err) {
+                  console.log(err);}
+          })
+        }
         //delete attachments
         card.attachments = card.attachments.filter(attachment => attachment._id.toString() !== attachmentId.toString())
         card.save()
+        // console.log(card.attachments)
         return callback(false, {card})
     } catch (error) {
+        return callback({errMessage: 'Something went wrong', details: error.message});
+    }
+}
+
+const updateAttachmentCard = async (cardId, listId, boardId,attachmentId,user,link,linkName,check,callback) =>{
+    try{
+        const card = await cardModel.findById(cardId);
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
+        // Validate owner
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) {
+            return callback({errMessage: 'You dont have permission to update attachment this card'})
+        }
+        if(check){
+            card.attachments = card.attachments.map(attachment =>{
+                if(attachment._id.toString() === attachmentId.toString()){
+                    attachment.link = link;
+                    attachment.name = linkName;
+                }
+                return attachment;
+                }
+            )
+            await card.save()
+        }else{
+            card.attachments = card.attachments.map(attachment =>{
+                    if(attachment._id.toString() === attachmentId.toString()){
+                        attachment.name = linkName;
+                    }
+                return attachment;
+                }
+            )
+            await card.save()
+        }
+        return callback(false, {card})
+    }catch(error){
         return callback({errMessage: 'Something went wrong', details: error.message});
     }
 }
@@ -430,5 +477,6 @@ module.exports = {
     deleteLabel,
     uploadFile,
     addAttachmentToCard,
-    deleteAttachmentCard
+    deleteAttachmentCard,
+    updateAttachmentCard
 }
