@@ -9,5 +9,6 @@ router.get("/get-user", userController.getUser);
 router.post("/get-user-with-email", userController.getUserWithMail);
 router.get('/check-email/:email',userController.checkUserByEmail);
 router.post('/user-update',userController.updateUser);
+router.post('/user-update-role',userController.updateRoleUser);
 
 module.exports = router;

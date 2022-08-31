@@ -1,5 +1,6 @@
 const boardModel = require("../models/boardModel");
 const userModel = require("../models/userModel");
+const helperMethods = require("./helperMethods");
 
 const getById = async (id, callback) => {
     try {
@@ -88,10 +89,34 @@ const updateIsExpandedLabels = async (boardId, user, callback) => {
 	}
 };
 
+const deleteMember=async (req,callback) => {
+    try {
+
+        const board = await boardModel.findById(req.body.boardId);
+		board.members=board.members.filter(member => member._id.toString()  !== req.body.idMember)
+		await board.save();
+
+
+        // Validate owner
+        // const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        // if (!validate) {
+        //     errMessage: 'You dont have permission to update this card';
+        // }
+		//
+
+
+        return callback(false, { message: 'Delete Member Success!' });
+    } catch (error) {
+        return callback({ errMessage: 'Something went wrong', details: error.message });
+    }
+
+
+}
 module.exports = {
     getById,
     addMember,
 	getActivityById,
 	updateBoardTitle,
-	updateIsExpandedLabels
+	updateIsExpandedLabels,
+	deleteMember
 };

@@ -1,4 +1,5 @@
 const boardService = require('../services/boardService');
+const cardService = require("../services/cardService");
 
 const getById = async (req, res) => {
     // Validate whether params.id is in the user's boards or not
@@ -72,10 +73,27 @@ const updateIsExpandedLabels = async (req, res) => {
 	});
 };
 
+const deleteMember = async (req, res) => {
+
+	// Get params
+	// const user = req.user;
+	// const { boardId, listId, cardId, commentId } = req.params;
+
+	// Call the card service
+	await boardService.deleteMember(req, (err, result) => {
+		if (err) return res.status(500).send(err);
+		return res.status(200).send(result);
+	});
+};
+
+
+
+
 module.exports = {
     getById,
     addMember,
 	getActivityById,
 	updateBoardTitle,
-	updateIsExpandedLabels
+	updateIsExpandedLabels,
+	deleteMember
 };

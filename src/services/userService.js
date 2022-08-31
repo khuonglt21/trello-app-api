@@ -1,5 +1,6 @@
 const userModel = require("../models/userModel");
 const teamModel = require("../models/teamModel");
+const boardModel = require("../models/boardModel");
 const {createRandomHexColor} = require("./helperMethods");
 
 const register = async (user, callback) => {
@@ -14,9 +15,10 @@ const register = async (user, callback) => {
             user: newUser._id,
         }]
     })
-    newUser.teams = newTeam._id
+    newUser.teams = newTeam._id;
+    newUser.defaultTeam = newTeam._id;
+    await newTeam.save();
 
-    console.log(newUser)
 
     await newUser
         .save()
@@ -114,6 +116,33 @@ const updateInfo = async (userId, userInfo, callback) => {
     }
 }
 
+const updateRoleUser = async (req, callback) => {
+    try {
+        const {role, idMember, idBoard} = req.body
+
+        const board = await boardModel.findById(idBoard)
+
+        board.members = board.members.map(member => {
+           if(member._id.toString() === idMember) {
+               member.role=role
+           }
+           return member
+        })
+
+        await board.save();
+
+        return callback(false, {
+            message: "roleUser changed successfully",
+        })
+
+    } catch (error) {
+        return callback({
+            errMessage: 'Something went wrong',
+            details: error.message,
+        });
+    }
+}
+
 
 module.exports = {
     register,
@@ -121,5 +150,6 @@ module.exports = {
     getUser,
     getUserWithMail,
     uploadAvatar,
-    updateInfo
+    updateInfo,
+    updateRoleUser
 };
