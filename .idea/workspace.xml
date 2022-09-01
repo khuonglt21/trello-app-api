@@ -6,22 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="45834c19-919d-4780-9767-f8d868bf8018" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/cardController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/cardController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661765378901-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661765563778-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661765578481-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661766859832-.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661767097011-.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661767115027-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661767156496-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661767227786-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661831746375-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661831802143-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/cardRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/cardRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/cardService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/cardService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/cards/1661913668103-.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/cards/1661932560141-.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/cards/1661932653315-.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +74,8 @@
       <workItem from="1661782994173" duration="2328000" />
       <workItem from="1661821826467" duration="16510000" />
       <workItem from="1661869612477" duration="2548000" />
-      <workItem from="1661907771619" duration="7710000" />
+      <workItem from="1661907771619" duration="8684000" />
+      <workItem from="1662023069765" duration="629000" />
     </task>
     <servers />
   </component>
