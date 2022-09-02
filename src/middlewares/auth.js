@@ -12,8 +12,7 @@ const verifyToken = async(req, res, next) => {
         if (!req.headers["authorization"])
             return res
                 .status(401)
-                .send({ errMessage: "Authorization token not found!" });
-
+                .send({ errMessage: "Login Timeout" });
         const header = req.headers["authorization"];
         const token = header.split(" ")[1];
 

@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="45834c19-919d-4780-9767-f8d868bf8018" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/cardController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/cardController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/uploadsController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/uploadsController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/cardRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/cardRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/uploadRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/uploadRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/cardService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/cardService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/cards/1661913668103-.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/cards/1661932560141-.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/cards/1661932653315-.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +17,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -67,7 +72,10 @@
       <workItem from="1661588173196" duration="6298000" />
       <workItem from="1661735719314" duration="17287000" />
       <workItem from="1661782994173" duration="2328000" />
-      <workItem from="1661821826467" duration="4978000" />
+      <workItem from="1661821826467" duration="16510000" />
+      <workItem from="1661869612477" duration="2548000" />
+      <workItem from="1661907771619" duration="8684000" />
+      <workItem from="1662023069765" duration="629000" />
     </task>
     <servers />
   </component>
