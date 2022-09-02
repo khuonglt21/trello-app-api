@@ -143,7 +143,7 @@ const updateLabel = async (cardId, listId, boardId, labelId, user, label, callba
         });
         await board.save();
 
-        return callback(false, {message: 'Success!'});
+        return callback(false, { message: 'Success!' });
     } catch (error) {
         return callback({errMessage: 'Something went wrong', details: error.message});
     }
@@ -174,7 +174,7 @@ const updateLabelSelection = async (cardId, listId, boardId, labelId, user, sele
 
         return callback(false, card);
     } catch (error) {
-        return callback({errMessage: 'Something went wrong', details: error.message});
+        return callback({ errMessage: 'Something went wrong', details: error.message });
     }
 };
 const createLabel = async (cardId, listId, boardId, user, label, callback) => {
@@ -199,7 +199,7 @@ const createLabel = async (cardId, listId, boardId, user, label, callback) => {
         });
         await card.save();
         board.labels.unshift({
-            _id: card.labels[0]._id,
+            _id : card.labels[0]._id,
             text: label.text,
             color: label.color,
             backcolor: label.backColor,
@@ -209,9 +209,9 @@ const createLabel = async (cardId, listId, boardId, user, label, callback) => {
 
         const labelId = card.labels[0]._id;
 
-        return callback(false, {labelId: labelId, card: card});
+        return callback(false, { labelId: labelId, card: card });
     } catch (error) {
-        return callback({errMessage: 'Something went wrong', details: error.message});
+        return callback({ errMessage: 'Something went wrong', details: error.message });
     }
 };
 
@@ -221,7 +221,7 @@ const deleteLabel = async (cardId, listId, boardId, labelId, user, callback) => 
         const card = await cardModel.findById(cardId);
         const list = await listModel.findById(listId);
         const board = await boardModel.findById(boardId);
-        const allCard = await cardModel.find({owner: list._id});
+        const allCard = await cardModel.find({owner: list._id });
 
 
         // Validate owner
@@ -236,9 +236,9 @@ const deleteLabel = async (cardId, listId, boardId, labelId, user, callback) => 
         board.labels = board.labels.filter((label) => label._id.toString() !== labelId.toString())
         await board.save();
 
-        return callback(false, {message: 'Success!'});
+        return callback(false, { message: 'Success!' });
     } catch (error) {
-        return callback({errMessage: 'Something went wrong', details: error.message});
+        return callback({ errMessage: 'Something went wrong', details: error.message });
     }
 };
 
@@ -253,18 +253,18 @@ const uploadFile = async (cardId, file, callback) => {
         //     }
         // })
         const card = await cardModel.findById(cardId);
-        card.attachments.push({
-            link: file,
-            name: file
-        });
+        card.attachments.push( {
+                       link: file,
+                       name: file
+                    });
         card.save();
-        return callback(false, card)
+        return callback(false,card)
     } catch (e) {
         return callback({errMessage: 'Something went wrong', details: e.message})
     }
 };
-const addAttachmentToCard = async (cardId, listId, boardId, user, linkName, link, callback) => {
-    try {
+const addAttachmentToCard = async(cardId,listId,boardId,user,linkName,link,callback) =>{
+    try{
         // Get models
         const card = await cardModel.findById(cardId);
         const list = await listModel.findById(listId);
@@ -273,16 +273,16 @@ const addAttachmentToCard = async (cardId, listId, boardId, user, linkName, link
         // Validate owner
         const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
         if (!validate) {
-            return callback({errMessage: 'You dont have permission to add label this card'})
+          return callback({errMessage: 'You dont have permission to add label this card'})
         }
-        card.attachments.push({
+        card.attachments.push( {
             link: link,
             name: linkName
         });
         card.save();
-        return callback(false, card)
-    } catch (e) {
-        callback(true, {errMessage: 'Something went wrong', details: e.message})
+        return callback(false,card)
+    }catch (e) {
+        callback(true,{errMessage: 'Something went wrong', details: e.message})
     }
 }
 const addComment = async (cardId, listId, boardId, user, body, callback) => {
@@ -320,7 +320,7 @@ const addComment = async (cardId, listId, boardId, user, body, callback) => {
 
         return callback(false, card.activities);
     } catch (error) {
-        return callback({errMessage: 'Something went wrong', details: error.message});
+        return callback({ errMessage: 'Something went wrong', details: error.message });
     }
 };
 
@@ -350,9 +350,9 @@ const deleteComment = async (cardId, listId, boardId, commentId, user, callback)
         });
         await board.save();
 
-        return callback(false, {message: 'Success!'});
+        return callback(false, { message: 'Success!' });
     } catch (error) {
-        return callback({errMessage: 'Something went wrong', details: error.message});
+        return callback({ errMessage: 'Something went wrong', details: error.message });
     }
 };
 
@@ -373,7 +373,7 @@ const updateComment = async (cardId, listId, boardId, commentId, user, body, cal
         card.activities = card.activities.map((activity) => {
             if (activity._id.toString() === commentId.toString()) {
                 if (activity.userName !== user.name) {
-                    return callback({errMessage: "You can not edit the comment that you hasn't"});
+                    return callback({ errMessage: "You can not edit the comment that you hasn't" });
                 }
                 activity.text = body.text;
             }
@@ -464,6 +464,80 @@ const updateAttachmentCard = async (cardId, listId, boardId,attachmentId,user,li
     }
 }
 
+const addMember = async (cardId, listId, boardId, user, memberId, callback) => {
+    try {
+        // Get models
+        const card = await cardModel.findById(cardId);
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
+        const member = await userModel.findById(memberId);
+
+        // Validate owner
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) {
+            errMessage: 'You dont have permission to add member this card';
+        }
+
+        //Add member
+        card.members.unshift({
+            user: member._id,
+            name: member.name,
+            color: member.color,
+        });
+        await card.save();
+
+        //Add to board activity
+        board.activity.unshift({
+            user: user._id,
+            name: user.name,
+            action: `added '${member.name}' to ${card.title}`,
+            color: user.color,
+        });
+        await board.save();
+
+        return callback(false, { message: 'success' });
+    } catch (error) {
+        return callback({ errMessage: 'Something went wrong', details: error.message });
+    }
+};
+
+const deleteMember = async (cardId, listId, boardId, user, memberId, callback) => {
+    try {
+        // Get models
+        const card = await cardModel.findById(cardId);
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
+
+        // Validate owner
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) {
+            errMessage: 'You dont have permission to add member this card';
+        }
+
+        //delete member
+        card.members = card.members.filter((a) => a.user.toString() !== memberId.toString());
+        await card.save();
+
+        //get member
+        const tempMember = await userModel.findById(memberId);
+
+        //Add to board activity
+        board.activity.unshift({
+            user: user._id,
+            name: user.name,
+            action:
+                tempMember.name === user.name
+                    ? `left ${card.title}`
+                    : `removed '${tempMember.name}' from ${card.title}`,
+            color: user.color,
+        });
+        board.save();
+
+        return callback(false, { message: 'success' });
+    } catch (error) {
+        return callback({ errMessage: 'Something went wrong', details: error.message });
+    }
+};
 module.exports = {
     create,
     getCard,
@@ -478,5 +552,8 @@ module.exports = {
     uploadFile,
     addAttachmentToCard,
     deleteAttachmentCard,
-    updateAttachmentCard
+    updateAttachmentCard,
+    addMember,
+    deleteMember,
+
 }
