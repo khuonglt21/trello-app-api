@@ -13,8 +13,10 @@ router.post('/:boardId/:listId/:cardId/add-comment', cardController.addComment);
 router.delete('/:boardId/:listId/:cardId/:commentId', cardController.deleteComment);
 router.put('/:boardId/:listId/:cardId/:commentId', cardController.updateComment);
 router.delete('/:boardId/:listId/:cardId/:labelId/delete-label', cardController.deleteLabel);
-
-router.post('/:boardId/:listId/:cardId',cardController.insertAttachmentsCard)
-
+router.delete('/attachment/:boardId/:listId/:cardId/:attachmentId',cardController.deleteAttachmentCard)
+router.post('/:boardId/:listId/:cardId/add-attachment', cardController.insertAttachmentsCard)
+router.put('/attachment/:boardId/:listId/:cardId/:attachmentId',cardController.attachmentUpdate)
+router.post('/:boardId/:listId/:cardId/add-member', cardController.addMember);
+router.delete('/:boardId/:listId/:cardId/:memberId/delete-member', cardController.deleteMember);
 
 module.exports = router;
