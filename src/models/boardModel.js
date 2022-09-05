@@ -65,7 +65,7 @@ const boardSchema = new mongoose.Schema(
                 },
                 role: {
                     type: String,
-                    default: 'member'
+                    default: 'Member'
                 },
                 color: {
                     type:String,

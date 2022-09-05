@@ -30,7 +30,7 @@ const addMember = async (id, members, user, callback) => {
 					email: newMember.email,
 					color: newMember.color,
 					avatar: newMember.avatar,
-					role: 'member',
+					role: 'Member',
 				});
 				//Add to board activity
 				board.activity.push({
@@ -91,10 +91,13 @@ const updateIsExpandedLabels = async (boardId, user, callback) => {
 
 const deleteMember=async (req,callback) => {
     try {
-
+		console.log(req.body)
         const board = await boardModel.findById(req.body.boardId);
-		board.members=board.members.filter(member => member._id.toString()  !== req.body.idMember)
+
+		board.members = board.members.filter(member => member._id.toString()  !== req.body.idMember)
+
 		await board.save();
+		// board.findByIdAndDelete({})
 
 
         // Validate owner
@@ -103,7 +106,6 @@ const deleteMember=async (req,callback) => {
         //     errMessage: 'You dont have permission to update this card';
         // }
 		//
-
 
         return callback(false, { message: 'Delete Member Success!' });
     } catch (error) {
