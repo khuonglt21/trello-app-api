@@ -1,11 +1,12 @@
 const boardModel = require("../models/boardModel");
 const userModel = require("../models/userModel");
+const cardModel = require("../models/cardModel");
 const helperMethods = require("./helperMethods");
 
 const getById = async (id, callback) => {
     try {
         // Get board by id
-        const board = await boardModel.findById(id);
+        const board = await boardModel.findById(id).populate({path: "teams", select : "members"});
         return callback(false, board);
     } catch (error) {
         return callback({ message: 'Something went wrong', details: error.message });
@@ -96,6 +97,17 @@ const deleteMember=async (req,callback) => {
 		board.members=board.members.filter(member => member._id.toString()  !== req.body.idMember)
 		await board.save();
 
+		//delete from all cards of board
+		board.lists.map(async list => {
+			const listCards = await cardModel.find({owner : list});
+			listCards.map(async card => {
+				// card.members.length && console.log(card.members)
+				// console.log(card.members.map(member => member.user.toString() !== req.body.idMember))
+				card.members = card.members.filter(member => member.user.toString() !== req.body.memberUser.toString());
+				// card.members.length && console.log(card.members)
+				await card.save();
+			})
+		});
 
         // Validate owner
         // const validate = await helperMethods.validateCardOwners(card, list, board, user, false);

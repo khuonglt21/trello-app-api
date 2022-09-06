@@ -1,6 +1,5 @@
 const cardService = require('../services/cardService');
 
-
 const create = async (req, res) => {
     // get infor from req.body
     const {title, listId, boardId} = req.body;
@@ -134,12 +133,53 @@ const insertAttachmentsCard = async (req, res) => {
     const {boardId,listId,cardId} = req.params;
     const user = req.user;
     const {link,linkName} = req.body;
-    console.log(link,linkName)
+    // console.log(link,linkName)
     await cardService.addAttachmentToCard(cardId,listId,boardId,user,linkName,link,(err, result)=>{
         if(err) return res.status(500).send(err);
         return res.status(200).send(result);
     })
 }
+const deleteAttachmentCard = async (req, res) => {
+    const {boardId,listId,cardId,attachmentId} = req.params;
+    const user = req.user
+    await cardService.deleteAttachmentCard(cardId, listId, boardId,attachmentId, user, (err, result)=>{
+        if(err) return res.status(400).send(err);
+        return res.status(200).send(result);
+    })
+}
+const attachmentUpdate = async(req, res) => {
+    const {boardId,listId,cardId,attachmentId} = req.params;
+    const user = req.user
+    const {link,linkName,check} = req.body;
+    await cardService.updateAttachmentCard(cardId, listId, boardId,attachmentId,user,link,linkName,check,(err, result) => {
+        if(err) return res.status(500).send(err);
+        return res.status(200).send(result);
+    })
+}
+
+const addMember = async (req, res) => {
+    // Get params
+    const user = req.user;
+    const { boardId, listId, cardId } = req.params;
+
+    // Call the card service
+    await cardService.addMember(cardId, listId, boardId, user, req.body.memberId, (err, result) => {
+        if (err) return res.status(500).send(err);
+        return res.status(200).send(result);
+    });
+};
+
+const deleteMember = async (req, res) => {
+    // Get params
+    const user = req.user;
+    const { boardId, listId, cardId, memberId } = req.params;
+
+    // Call the card service
+    await cardService.deleteMember(cardId, listId, boardId, user, memberId, (err, result) => {
+        if (err) return res.status(500).send(err);
+        return res.status(200).send(result);
+    });
+};
 
 module.exports = {
     create,
@@ -152,6 +192,10 @@ module.exports = {
     deleteComment,
     updateComment,
     deleteLabel,
-    insertAttachmentsCard
+    insertAttachmentsCard,
+    deleteAttachmentCard,
+    attachmentUpdate,
+    addMember,
+    deleteMember,
 
 }

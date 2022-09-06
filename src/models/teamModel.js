@@ -25,6 +25,12 @@ const teamSchema = new mongoose.Schema({
                 type: String,
                 default: 'member'
             },
+            color: {
+                type:String,
+            },
+            avatar:{
+                type: String,
+            },
         },
     ],
     boards: [
