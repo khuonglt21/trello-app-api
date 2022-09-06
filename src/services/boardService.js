@@ -31,7 +31,7 @@ const addMember = async (id, members, user, callback) => {
 					email: newMember.email,
 					color: newMember.color,
 					avatar: newMember.avatar,
-					role: 'member',
+					role: 'Member',
 				});
 				//Add to board activity
 				board.activity.push({
@@ -92,9 +92,15 @@ const updateIsExpandedLabels = async (boardId, user, callback) => {
 
 const deleteMember=async (req,callback) => {
     try {
+        const board = await boardModel.findById(req.body.boardId)
 
-        const board = await boardModel.findById(req.body.boardId);
-		board.members=board.members.filter(member => member._id.toString()  !== req.body.idMember)
+		//xoa member trong board && xoa board o trong member dang bi xoa
+		const memberDelete=board.members?.filter(member => member._id.toString()  === req.body.idMember)
+		const user=await userModel.findById(memberDelete[0].user)
+		user.boards = user?.boards.filter(board => board._id.toString() !== req.body.boardId)
+		await user.save();
+
+		board.members = board.members.filter(member => member._id.toString()  !== req.body.idMember)
 		await board.save();
 
 		//delete from all cards of board
@@ -115,7 +121,6 @@ const deleteMember=async (req,callback) => {
         //     errMessage: 'You dont have permission to update this card';
         // }
 		//
-
 
         return callback(false, { message: 'Delete Member Success!' });
     } catch (error) {

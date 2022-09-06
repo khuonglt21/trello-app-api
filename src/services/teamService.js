@@ -22,7 +22,7 @@ const createTeam = async (req, callback) => {
             surname: user.surname,
             email: user.email,
             color: user.color,
-            role: 'owner',
+            role: 'Admin',
         });
 
         // Save newBoard's id to boards of members and,
@@ -38,7 +38,7 @@ const createTeam = async (req, callback) => {
                     surname: newMember.surname,
                     email: newMember.email,
                     color: newMember.color,
-                    role: 'member',
+                    role: 'Member',
                 });
                 //Add to board activity
                 // newBoard.activity.push({
