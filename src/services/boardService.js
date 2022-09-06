@@ -92,13 +92,16 @@ const updateIsExpandedLabels = async (boardId, user, callback) => {
 
 const deleteMember=async (req,callback) => {
     try {
-		console.log(req.body)
-        const board = await boardModel.findById(req.body.boardId);
+        const board = await boardModel.findById(req.body.boardId)
+
+		//xoa member trong board && xoa board o trong member dang bi xoa
+		const memberDelete=board.members?.filter(member => member._id.toString()  === req.body.idMember)
+		const user=await userModel.findById(memberDelete[0].user)
+		user.boards = user?.boards.filter(board => board._id.toString() !== req.body.boardId)
+		await user.save();
 
 		board.members = board.members.filter(member => member._id.toString()  !== req.body.idMember)
-
 		await board.save();
-		// board.findByIdAndDelete({})
 
 		//delete from all cards of board
 		board.lists.map(async list => {
