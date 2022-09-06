@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="45834c19-919d-4780-9767-f8d868bf8018" name="Changes" comment="">
+    <list default="true" id="45834c19-919d-4780-9767-f8d868bf8018" name="Changes" comment="merge">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661913668103-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661932560141-.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/cards/1661932653315-.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/userController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middlewares/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/userService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,8 +75,21 @@
       <workItem from="1661821826467" duration="16510000" />
       <workItem from="1661869612477" duration="2548000" />
       <workItem from="1661907771619" duration="8684000" />
-      <workItem from="1662023069765" duration="629000" />
+      <workItem from="1662023069765" duration="2324000" />
+      <workItem from="1662171143051" duration="1441000" />
+      <workItem from="1662198876058" duration="1223000" />
+      <workItem from="1662340081334" duration="2496000" />
+      <workItem from="1662387906793" duration="3154000" />
+      <workItem from="1662401437711" duration="1393000" />
     </task>
+    <task id="LOCAL-00001" summary="merge">
+      <created>1662023784592</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1662023784592</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -92,5 +105,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge" />
   </component>
 </project>
