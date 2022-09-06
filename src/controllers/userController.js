@@ -17,7 +17,9 @@ const register = async (req, res) => {
     const hashedPassword = bcrypt.hashSync(password, salt);
     req.body.password = hashedPassword;
     await userService.register(req.body, (err, result) => {
-        if (err) return res.status(400).send(err);
+        if (err) {
+            return res.status(400).send(err);
+        }
         return res.status(201).send(result);
     });
 };
