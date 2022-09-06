@@ -68,10 +68,12 @@ const getUserWithMail = async (req, res) => {
     await userService.getUserWithMail(email, (err, result) => {
         if (err) return res.status(404).send(err);
         const dataTransferObject = {
+            user:result._id,
             name: result.name,
             surname: result.surname,
             color: result.color,
-            email: result.email
+            email: result.email,
+            role:"Member"
         };
         return res.status(200).send(dataTransferObject);
     })
@@ -88,7 +90,6 @@ const checkUserByEmail = async (req, res) => {
         }
 
     })
-
 }
 
 const updateUser = async (req, res) => {
@@ -128,7 +129,6 @@ const updateUser = async (req, res) => {
 
 
 const updateRoleUser = async (req, res) => {
-
     try{
         await userService.updateRoleUser(req, (err, result) => {
             if (err) return res.status(500).send(err);

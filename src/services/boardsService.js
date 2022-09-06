@@ -3,8 +3,8 @@ const userModel = require("../models/userModel");
 const helperMethods = require('./helperMethods');
 const create = async (req, callback) => {
     try {
-        console.log(req.body)
         const { title, backgroundImageLink, members, isImage,visibility,teams} = req.body;
+
         // Create and save new board
         let newBoard =  boardModel({ title, backgroundImageLink, isImage,visibility,teams});
         await newBoard.save();
@@ -22,7 +22,7 @@ const create = async (req, callback) => {
             surname: user.surname,
             email: user.email,
             color: user.color,
-            role: 'owner',
+            role: 'Admin',
         });
 
         // Save newBoard's id to boards of members and,
@@ -38,7 +38,7 @@ const create = async (req, callback) => {
                     surname: newMember.surname,
                     email: newMember.email,
                     color: newMember.color,
-                    role: 'member',
+                    role: 'Member',
                 });
                 //Add to board activity
                 newBoard.activity.push({
@@ -48,7 +48,6 @@ const create = async (req, callback) => {
                 });
             })
         );
-
         // Add created activity to activities of this board
         newBoard.activity.unshift({ user: user._id, name: user.name, action: 'created this board', color: user.color });
 
@@ -65,6 +64,7 @@ const create = async (req, callback) => {
         });
     }
 };
+
 const getAll = async (userId, callback) => {
     try {
         // Get user
