@@ -5,8 +5,9 @@ const {createRandomHexColor} = require("./helperMethods");
 
 const register = async (user, callback) => {
     let userfind = await userModel.findOne({email: user.email});
-    if (userfind) return callback({errMessage: "Email already in use!", details: ""});
-
+    if (userfind) {
+        return callback({errMessage: "Email already in use!", details: ""});
+    }
     const newUser = new userModel({...user, color: createRandomHexColor()});
 
     const newTeam = new teamModel({
