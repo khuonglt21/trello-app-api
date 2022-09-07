@@ -17,6 +17,17 @@ const create = async (req, res) => {
     		if (err) return res.status(500).send(err);
     		return res.status(201).send(result);
     	});
+};
+
+const deleteCard = async (req, res) => {
+
+    const {cardId, listId, boardId} = req.body;
+    const user = req.user;
+     // call card service
+    await cardService.deleteCard(cardId, listId, boardId,user,(err,result)=>{
+        if(err) {return res.status(500).send(err)}
+        return res.status(200).send(result)
+    })
 }
 
 const getCard = async (req, res) => {
@@ -197,5 +208,5 @@ module.exports = {
     attachmentUpdate,
     addMember,
     deleteMember,
-
+    deleteCard
 }
