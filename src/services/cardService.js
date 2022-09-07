@@ -45,6 +45,32 @@ const create = async (title, listId, boardId, user, callback) => {
     }
 };
 
+const deleteCard = async(cardId,listId,boardId,user,callback) => {
+    try{
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
+        const card = await cardModel.findById(cardId);
+        // console.log(card)
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) return callback({
+            errMessage: 'You dont have permission to delete this card',
+        });
+      // //   // delete card by id
+      // let cards=  await cardModel.findByIdAndDelete(cardId);
+      // cards.save()
+
+      list.cards =  list.cards.filter((card) =>
+           card.toString() !== cardId.toString()
+        )
+        // console.log(list)
+        await list.save()
+        const result = await listModel.findById(listId)
+        return callback(false, result);
+    }catch(err) {
+        return callback({errMessage: 'Something went wrong', details: err.message});
+    }
+}
+
 const getCard = async (cardId, listId, boardId, user, callback) => {
     try {
         // Get models
@@ -538,6 +564,24 @@ const deleteMember = async (cardId, listId, boardId, user, memberId, callback) =
         return callback({ errMessage: 'Something went wrong', details: error.message });
     }
 };
+const updateDescription =async(cardId,listId,boardId,description,user,callback)=>{
+    try{
+        const card = await cardModel.findById(cardId);
+        const list = await listModel.findById(listId);
+        const board = await boardModel.findById(boardId);
+        // Validate owner
+        const validate = await helperMethods.validateCardOwners(card, list, board, user, false);
+        if (!validate) {
+           return callback({errMessage: 'You dont have permission to add member this card'})
+        }
+        card.description = description.toString();
+        await card.save();
+        return callback(false,{message:'success',card})
+    }catch (error) {
+        return callback({ errMessage: 'Something went wrong', details: error.message });
+    }
+}
+
 module.exports = {
     create,
     getCard,
@@ -555,5 +599,6 @@ module.exports = {
     updateAttachmentCard,
     addMember,
     deleteMember,
-
+    deleteCard,
+    updateDescription
 }
