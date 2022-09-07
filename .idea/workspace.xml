@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="45834c19-919d-4780-9767-f8d868bf8018" name="Changes" comment="merge">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/cardController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/cardController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/cardRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/cardRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/cardService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/cardService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +79,7 @@
       <workItem from="1662387906793" duration="3154000" />
       <workItem from="1662401437711" duration="11964000" />
       <workItem from="1662474012253" duration="3377000" />
-      <workItem from="1662513172319" duration="9317000" />
+      <workItem from="1662513172319" duration="10817000" />
     </task>
     <task id="LOCAL-00001" summary="merge">
       <created>1662023784592</created>
