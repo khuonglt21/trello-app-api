@@ -191,7 +191,14 @@ const deleteMember = async (req, res) => {
         return res.status(200).send(result);
     });
 };
-
+    const descriptionUpdate =async (req,res) =>{
+        const {cardId,boardId,listId,description} = req.body;
+        const user = req.user;
+        await cardService.updateDescription(cardId, listId, boardId,description,user,(err, result)=>{
+            if (err) return res.status(500).send(err);
+            return res.status(200).send(result);
+        })
+    }
 module.exports = {
     create,
     getCard,
@@ -208,5 +215,6 @@ module.exports = {
     attachmentUpdate,
     addMember,
     deleteMember,
-    deleteCard
+    deleteCard,
+    descriptionUpdate
 }
