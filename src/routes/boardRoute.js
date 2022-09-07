@@ -8,5 +8,6 @@ route.get('/:id/activity', boardController.getActivityById);
 route.put('/:boardId/update-board-title', boardController.updateBoardTitle);
 route.put('/:boardId/update-expanded-labels', boardController.updateIsExpandedLabels);
 route.put('/:boardId/delete-member', boardController.deleteMember);
+route.put('/change-visibility', boardController.changeVisibilityOfBoard);
 
 module.exports = route;
