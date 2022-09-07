@@ -87,6 +87,16 @@ const deleteMember = async (req, res) => {
 };
 
 
+const changeVisibilityOfBoard = async (req, res) => {
+
+
+	await boardService.changeVisibilityOfBoard(req, (err, result) => {
+		if (err) return res.status(500).send(err);
+		return res.status(200).send(result);
+	});
+};
+
+
 
 
 module.exports = {
@@ -95,5 +105,9 @@ module.exports = {
 	getActivityById,
 	updateBoardTitle,
 	updateIsExpandedLabels,
-	deleteMember
+	deleteMember,
+	changeVisibilityOfBoard
 };
+
+// user.boards.map(board=>{
+//            console.log(board)
