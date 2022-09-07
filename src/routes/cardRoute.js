@@ -19,5 +19,6 @@ router.put('/attachment/:boardId/:listId/:cardId/:attachmentId',cardController.a
 router.post('/:boardId/:listId/:cardId/add-member', cardController.addMember);
 router.delete('/:boardId/:listId/:cardId/:memberId/delete-member', cardController.deleteMember);
 router.delete('/delete-card',cardController.deleteCard);
-// /:boardId/:listId/:cardId
+
+
 module.exports = router;
