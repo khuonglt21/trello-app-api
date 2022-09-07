@@ -3,7 +3,7 @@ const boardsService = require("../services/boardsService");
 
 
 const createTeam = async (req, res) => {
-    console.log(req.body)
+
     const {name} = req.body;
     if (!(name))
         return res.status(400).send({errMessage: 'name cannot be null'});
@@ -56,6 +56,27 @@ const changeRoleTeam = async (req, res) => {
         return res.status(201).send(result);
     });
 };
+const changeRoleUserTeam = async (req, res) => {
+    await teamService.changeRoleUser(req, (err, result) => {
+        if (err) return res.status(500).send(err);
+        result.__v = undefined;
+        return res.status(201).send(result);
+    });
+};
+const inviteMember = async (req, res) => {
+    await teamService.inviteMember(req, (err, result) => {
+        if (err) return res.status(500).send(err);
+        result.__v = undefined;
+        return res.status(201).send(result);
+    });
+};
+const removeMember = async (req, res) => {
+    await teamService.removeMember(req, (err, result) => {
+        if (err) return res.status(500).send(err);
+        result.__v = undefined;
+        return res.status(201).send(result);
+    });
+};
 
 
 
@@ -65,5 +86,8 @@ module.exports = {
     createBoardInTeam,
     getAllTeams,
     changeRoleTeam,
-    getTeam
+    getTeam,
+    inviteMember,
+    removeMember,
+    changeRoleUserTeam
 };
