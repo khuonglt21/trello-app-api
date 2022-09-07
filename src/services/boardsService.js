@@ -1,9 +1,12 @@
 const boardModel = require("../models/boardModel");
+const teamModel = require("../models/teamModel");
 const userModel = require("../models/userModel");
 const helperMethods = require('./helperMethods');
 const create = async (req, callback) => {
     try {
         const { title, backgroundImageLink, members, isImage,visibility,teams} = req.body;
+        console.log(members,'......')
+
 
         // Create and save new board
         let newBoard =  boardModel({ title, backgroundImageLink, isImage,visibility,teams});
@@ -55,6 +58,24 @@ const create = async (req, callback) => {
         newBoard.members = allMembers;
         newBoard.labels = helperMethods.labelsSeed;
         await newBoard.save();
+
+        //add board vao moi thanh vien trong team
+        const team =await teamModel.findById(teams.toString())
+        const idMemberInBoard=team.members.map(member =>member.user.toString());
+        idMemberInBoard.map(async (idMember) => {
+                if (visibility !== "Private" && !members.find(mem => mem.user === idMember)) {
+                    const member = await userModel.findById(idMember)
+                    // if(visibility !== "Private") {
+
+                        member.boards.unshift(newBoard.id);
+                    // }else {
+                        //ko push
+                    // }
+                    await member.save();
+            }}
+        )
+
+
 
         return callback(false, newBoard);
     } catch (error) {

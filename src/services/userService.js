@@ -11,7 +11,7 @@ const register = async (user, callback) => {
     const newUser = new userModel({...user, color: createRandomHexColor()});
 
     const newTeam = new teamModel({
-        name: "Trello Không gian làm việc ",
+        name: "Trello Workspaces",
         members: [{
             user: newUser._id,
         }]
