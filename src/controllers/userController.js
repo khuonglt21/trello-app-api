@@ -141,6 +141,19 @@ const updateRoleUser = async (req, res) => {
 
 }
 
+const getTwoBoardRecently = async (req, res) => {
+    try{
+        await userService.getTwoBoardRecently(req, (err, result) => {
+            if (err) return res.status(500).send(err);
+            result.__v = undefined;
+            return res.status(201).send(result);
+        });
+    }catch (error) {
+        return res.status(404).send(error);
+    }
+
+}
+
 
 
 module.exports = {
@@ -150,5 +163,6 @@ module.exports = {
     getUserWithMail,
     checkUserByEmail,
     updateUser,
-    updateRoleUser
+    updateRoleUser,
+    getTwoBoardRecently
 };
