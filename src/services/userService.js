@@ -124,10 +124,10 @@ const updateRoleUser = async (req, callback) => {
         const board = await boardModel.findById(idBoard)
 
         board.members = board.members.map(member => {
-           if(member._id.toString() === idMember) {
-               member.role=role
-           }
-           return member
+            if (member._id.toString() === idMember) {
+                member.role = role
+            }
+            return member
         })
 
         await board.save();
@@ -145,6 +145,27 @@ const updateRoleUser = async (req, callback) => {
 }
 
 
+const getTwoBoardRecently = async (req, callback) => {
+    try {
+        const idUser = req.params.idUser
+        const user = await userModel.findById(idUser)
+        const idBoard = user.boards;
+        const boards = await boardModel
+            .find({ _id: { $in: idBoard } })
+            .collation({'locale':'en'})
+            .sort({createdAt: -1})
+            .limit(2)
+        console.log(boards)
+        return callback(false, boards)
+    } catch (error) {
+        return callback({
+            errMessage: 'Something went wrong',
+            details: error.message,
+        });
+    }
+}
+
+
 module.exports = {
     register,
     login,
@@ -152,5 +173,6 @@ module.exports = {
     getUserWithMail,
     uploadAvatar,
     updateInfo,
-    updateRoleUser
+    updateRoleUser,
+    getTwoBoardRecently
 };

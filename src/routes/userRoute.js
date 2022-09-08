@@ -10,5 +10,6 @@ router.post("/get-user-with-email", userController.getUserWithMail);
 router.get('/check-email/:email',userController.checkUserByEmail);
 router.post('/user-update',userController.updateUser);
 router.post('/user-update-role',userController.updateRoleUser);
+router.get('/:idUser/get-two-board-recently',userController.getTwoBoardRecently);
 
 module.exports = router;
