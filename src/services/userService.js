@@ -9,12 +9,17 @@ const register = async (user, callback) => {
         return callback({errMessage: "Email already in use!", details: ""});
     }
     const newUser = new userModel({...user, color: createRandomHexColor()});
+    newUser.role="Admin"
 
     const newTeam = new teamModel({
         name: "Trello Workspaces",
         members: [{
             user: newUser._id,
-        }]
+            ...newUser
+
+        }],
+        role:"Private",
+
     })
     newUser.teams = newTeam._id;
     newUser.defaultTeam = newTeam._id;
