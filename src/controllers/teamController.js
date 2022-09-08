@@ -3,6 +3,7 @@ const boardsService = require("../services/boardsService");
 
 
 const createTeam = async (req, res) => {
+
     const {name} = req.body;
     if (!(name))
         return res.status(400).send({errMessage: 'name cannot be null'});
@@ -21,6 +22,20 @@ const getTeams = async (req, res) => {
         return res.status(200).send(result);
     });
 };
+const getAllTeams = async (req, res) => {
+    const userId = req.user.id;
+    await teamService.getAllTeams(userId, (err, result) => {
+        if (err) return res.status(400).send(err);
+        return res.status(200).send(result);
+    });
+};
+const getTeam = async (req, res) => {
+    const idTeam = req.params.idTeam;
+    await teamService.getTeam(idTeam, (err, result) => {
+        if (err) return res.status(400).send(err);
+        return res.status(200).send(result);
+    });
+};
 
 
 const createBoardInTeam = async (req, res) => {
@@ -34,11 +49,45 @@ const createBoardInTeam = async (req, res) => {
     });
 };
 
+const changeRoleTeam = async (req, res) => {
+    await teamService.changeRole(req, (err, result) => {
+        if (err) return res.status(500).send(err);
+        result.__v = undefined;
+        return res.status(201).send(result);
+    });
+};
+const changeRoleUserTeam = async (req, res) => {
+    await teamService.changeRoleUser(req, (err, result) => {
+        if (err) return res.status(500).send(err);
+        result.__v = undefined;
+        return res.status(201).send(result);
+    });
+};
+const inviteMember = async (req, res) => {
+    await teamService.inviteMember(req, (err, result) => {
+        if (err) return res.status(500).send(err);
+        result.__v = undefined;
+        return res.status(201).send(result);
+    });
+};
+const removeMember = async (req, res) => {
+    await teamService.removeMember(req, (err, result) => {
+        if (err) return res.status(500).send(err);
+        result.__v = undefined;
+        return res.status(201).send(result);
+    });
+};
+
 
 
 module.exports = {
     createTeam,
     getTeams,
-    createBoardInTeam
-
+    createBoardInTeam,
+    getAllTeams,
+    changeRoleTeam,
+    getTeam,
+    inviteMember,
+    removeMember,
+    changeRoleUserTeam
 };

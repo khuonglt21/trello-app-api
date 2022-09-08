@@ -4,10 +4,12 @@ const boardModel = require("../models/boardModel");
 
 const createTeam = async (req, callback) => {
     try {
-        const {name,description,members } = req.body;
+        const {name,description,members, roleTeam } = req.body;
         // Create and save new board
         let newTeam = new teamModel({ name, description});
+        newTeam.role = roleTeam;
         await newTeam.save();
+
 
         // Add this board to owner's boards
         const user = await userModel.findById(req.user.id);
@@ -92,6 +94,105 @@ const getTeams = async (userId, callback) => {
         return callback({ msg: 'Something went wrong', details: error.message });
     }
 };
+const getAllTeams = async (userId, callback) => {
+    try {
+       const teams = await teamModel.find();
+
+        return callback(false, teams);
+    } catch (error) {
+        return callback({ msg: 'Something went wrong', details: error.message });
+    }
+};
+const getTeam = async (idTeam, callback) => {
+    try {
+       const team = await teamModel.findById(idTeam);
+        return callback(false, team);
+    } catch (error) {
+        return callback({ msg: 'Something went wrong', details: error.message });
+    }
+};
+const changeRole = async (req, callback) => {
+    try {
+       const team = await teamModel.findById(req.body.idTeam);
+       team.role = req.body.role;
+       await team.save();
+
+       return callback(false, team);
+    } catch (error) {
+        return callback({ msg: 'Something went wrong', details: error.message });
+    }
+};
+const changeRoleUser = async (req, callback) => {
+    try {
+       const team = await teamModel.findById(req.body.idTeam);
+       team.members = team.members.map((member) =>{
+           if(member.user.toString() === req.body.idUser){
+                member.role = req.body.roleUser
+           }
+           return member;
+       })
+       await team.save();
+       return callback(false, team);
+    } catch (error) {
+        return callback({ msg: 'Something went wrong', details: error.message });
+    }
+};
+const inviteMember = async (req, callback) => {
+    try {
+        const team = await teamModel.findById(req.body.idTeam);
+        await Promise.all(
+            req.body.members.map(async (member) => {
+                const newMember = await userModel.findOne({ email: member.email });
+                newMember.teams.push(team._id);
+                await newMember.save();
+                team.members.push({
+                    user: newMember._id,
+                    name: newMember.name,
+                    surname: newMember.surname,
+                    email: newMember.email,
+                    color: newMember.color,
+                    avatar: newMember.avatar,
+                    role: 'Member',
+                });
+            })
+        );
+        // Save changes
+        await team.save();
+        return callback(false, {message: 'Success!', members: team.members});
+    } catch (error) {
+        return callback({ msg: 'Something went wrong', details: error.message });
+    }
+};
+const removeMember = async (req, callback) => {
+    try {
+        const team = await teamModel.findById(req.body.teamId);
+        const user = await userModel.findById(req.body.idUser);
+        user.teams = user.teams.filter(team => team.toString() !== req.body.teamId)
+        team.members = team.members.filter(member => member._id.toString() !== req.body.idMember);
+        // await Promise.all(
+        //     req.body.members.map(async (member) => {
+        //         const newMember = await userModel.findOne({ email: member.email });
+        //         newMember.teams.push(team._id);
+        //         await newMember.save();
+        //         team.members.push({
+        //             user: newMember._id,
+        //             name: newMember.name,
+        //             surname: newMember.surname,
+        //             email: newMember.email,
+        //             color: newMember.color,
+        //             avatar: newMember.avatar,
+        //             role: 'Member',
+        //         });
+        //     })
+        // );
+        // // Save changes
+        await user.save();
+        await team.save();
+        return callback(false, {message: 'Remove member successfully!'});
+    } catch (error) {
+        return callback({ msg: 'Something went wrong', details: error.message });
+    }
+};
 
 const createBoardInTeam = async (req, callback) => {
     try {
@@ -168,5 +269,11 @@ const createBoardInTeam = async (req, callback) => {
 module.exports = {
     createTeam,
     getTeams,
-    createBoardInTeam
+    createBoardInTeam,
+    getAllTeams,
+    changeRole,
+    getTeam,
+    inviteMember,
+    removeMember,
+    changeRoleUser
 };

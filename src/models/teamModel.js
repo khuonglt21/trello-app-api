@@ -40,7 +40,10 @@ const teamSchema = new mongoose.Schema({
         }
     ],
     image: {
-        type: String
+        type: String,
+    },
+    role: {
+        type: String,
     }
 
 }, {timestamps: true});
