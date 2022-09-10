@@ -1,2 +1,5 @@
-PORT = 5000
-MONGODB_URL=mongodb+srv://khuongkyuubi:mongodb123456@posts.meidn.mongodb.net/trello?retryWrites=true&w=majority;
+PORT
+MONGODB_URL
+JWT_SECRET
+TOKEN_EXPIRE_TIME
+CLIENT_ENDPOINT=http://localhost:3000
